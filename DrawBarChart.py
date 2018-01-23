@@ -81,3 +81,22 @@ def draw_stackedbar_chart(chart_title,dict_values,start,end):
     print(chart_title + ' Done!')
 
 # draw_stackedbar_chart('年转发微博占比统计',dict_values,2011,2018)
+
+'''发博终端统计'''
+# dict_values = {'iPhone':941,'weibo.com':704,'Kjava':225,'其他':121}
+def draw_bar_pic(chart_title, dict_values):
+    bar_pic = pygal.Bar(print_values=True,legend_at_bottom=True, legend_at_bottom_columns=8,style = LightSolarizedStyle(
+                      value_font_family='googlefont:Raleway',
+                      value_font_size=30,
+                      value_colors=('white','white','white','white','white','white','white')))
+
+    bar_pic.title = chart_title
+
+    for key,value in dict_values.items():
+        bar_pic.add(key, value)
+
+    bar_pic.render_to_file(chart_title + '.svg')
+
+    print(chart_title + ' Done!')
+
+# draw_bar_pic('发博终端统计',dict_values)
