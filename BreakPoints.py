@@ -7,28 +7,35 @@ def generate_sites(start, end, url):
 
     print('urls: ' + str(start) + ' to ' + str(end) + ' generated!')
 
-def get_sites_to_download():
-    fin = open('download.txt',"r")
-    # fout = open('waitdownload.txt','a',encoding = 'utf-8')
+def get_urls_to_download():
+    ftodownload = open('download.txt','r')
+    fdownloaded = open('downloaded.txt','r')
+    fout = open('123.txt','a',encoding = 'utf-8')
+    
     urls_to_download = []
-    for url in fin:
+
+    for url in ftodownload:
         url = url.split('\n')[0]
         if url not in urls_to_download:
             urls_to_download.append(url)
-    
+
     # urls_to_download = set()
     # for url in fin:
     #    url = url.split('\n')[0]
     #    urls_to_download.add(url) 
 
-    # print(urls_to_download,file = fout)
-    print(str(len(urls_to_download)) + ' urls get!')
+    url_downloaded = [url.split('\n')[0] for url in fdownloaded]
+    print(list(set(urls_to_download) - set(url_downloaded)),file = fout)
+    #print(str(len(urls_to_download)) + ' urls get!')
+    return set(urls_to_download) - set(url_downloaded)
 
-def record_fail_urls(url):
-    fout = open('failurls.txt',"a",encoding = 'utf-8')
+
+def record_downloaded_urls(url):
+    fout = open('downloaded.txt',"a",encoding = 'utf-8')
     print(urls,file = fout)
 
+    
 
 if __name__ == '__main__':
-    #generate_sites(151,200,seed_url)
-    get_sites_to_download()
+#     #generate_sites(1,1150,seed_url)
+    get_urls_to_download()
