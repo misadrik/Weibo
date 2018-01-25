@@ -34,6 +34,7 @@ def get_one_card_Info(mblog,page):
     if 'raw_text' in mblog:
         one_card_Info['is_retweet'] = 1
         one_card_Info['text'] = mblog['raw_text'].split('//')[0]
+        one_card_Info['is_long_text'] = 0  #判断长文
     else:
         one_card_Info['is_retweet'] = 0
         ###'''15末以前的博文没有此标识，要加入判断'''###
