@@ -33,7 +33,7 @@ def one_year_bar_chart(chart_title,values):
 '''年平均点赞统计'''
 '''年转发微博统计'''
 def year_bar_chart(chart_title,values,start,end):
-    bar_pic = pygal.Bar(print_values=True,legend_at_bottom=True, legend_at_bottom_columns=8,style = LightSolarizedStyle(
+    bar_pic = pygal.Bar(print_values=True,legend_at_bottom=True, legend_at_bottom_columns=9,style = LightSolarizedStyle(
                       value_font_family='googlefont:Raleway',
                       value_font_size=30,
                       value_colors=('white','white','white','white','white','white','white','white','white','white')))
@@ -62,7 +62,7 @@ def year_bar_chart(chart_title,values,start,end):
 #     [{'value':x1,'color': 'rgba(255, 45, 20, .6)'},{'value':x2,'color': 'rgba(255, 45, 20, .6)'},{'value':x3,'color': 'rgba(255, 45, 20, .6)'},{'value':x4,'color': 'rgba(255, 45, 20, .6)'},{'value':x5,'color': 'rgba(255, 45, 20, .6)'},{'value':x6,'color': 'rgba(255, 45, 20, .6)'},{'value':x7,'color': 'rgba(255, 45, 20, .6)'},{'value':x8,'color': 'rgba(255, 45, 20, .6)'}],
 # ]
 
-def draw_stackedbar_chart(chart_title,dict_values,start,end):
+def draw_stackedbar_chart(chart_title,ori_list_values,ret_list_values,start,end):
     stackedbar_pic = pygal.StackedBar(print_values=True,style = LightSolarizedStyle(
                     value_font_family='googlefont:Raleway',
                     value_font_size=30,
@@ -71,8 +71,8 @@ def draw_stackedbar_chart(chart_title,dict_values,start,end):
     stackedbar_pic.title = chart_title
     stackedbar_pic.x_labels = map(str, range(start, end + 1))
 
-    stackedbar_pic.add('原创占比', dict_values[0],formatter = lambda x:  '%s%%' % x)
-    stackedbar_pic.add('转发占比', dict_values[1],formatter = lambda x:  '%s%%' % x)
+    stackedbar_pic.add('原创占比', ori_list_values,formatter = lambda x:  '%s%%' % x)
+    stackedbar_pic.add('转发占比', ret_list_values,formatter = lambda x:  '%s%%' % x)
 
     # stackedbar_pic.add('原创占比',[{'value':100-x1,'color': 'rgba(0, 210, 235, .7)'},{'value':100-x2,'color': 'rgba(0, 210, 235, .7)'},{'value':100-x3,'color': 'rgba(0, 210, 235, .7)'},{'value':100-x4,'color': 'rgba(0, 210, 235, .7)'},{'value':100-x5,'color': 'rgba(0, 210, 235, .7)'},{'value':100-x6,'color': 'rgba(0, 210, 235, .7)'},{'value':100-x7,'color': 'rgba(0, 210, 235, .7)'},{'value':100-x8,'color': 'rgba(0, 210, 235, .7)'}],formatter = lambda x:  '%s%%' % x)
     # stackedbar_pic.add('转发占比',[{'value':x1,'color': 'rgba(255, 45, 20, .6)'},{'value':x2,'color': 'rgba(255, 45, 20, .6)'},{'value':x3,'color': 'rgba(255, 45, 20, .6)'},{'value':x4,'color': 'rgba(255, 45, 20, .6)'},{'value':x5,'color': 'rgba(255, 45, 20, .6)'},{'value':x6,'color': 'rgba(255, 45, 20, .6)'},{'value':x7,'color': 'rgba(255, 45, 20, .6)'},{'value':x8,'color': 'rgba(255, 45, 20, .6)'}],formatter = lambda x:  '%s%%' % x)
@@ -84,19 +84,19 @@ def draw_stackedbar_chart(chart_title,dict_values,start,end):
 
 '''发博终端统计'''
 # dict_values = {'iPhone':941,'weibo.com':704,'Kjava':225,'其他':121}
-def draw_bar_pic(chart_title, dict_values):
-    bar_pic = pygal.Bar(print_values=True,legend_at_bottom=True, legend_at_bottom_columns=8,style = LightSolarizedStyle(
+def draw_source_bar_pic(chart_title, dict_values):
+    bar_pic = pygal.Bar(print_values=True,legend_at_bottom=True, legend_at_bottom_columns=5,style = LightSolarizedStyle(
                       value_font_family='googlefont:Raleway',
                       value_font_size=30,
-                      value_colors=('white','white','white','white','white','white','white')))
+                      value_colors=('white','white','white','white','white','white','white','white','white')))
 
     bar_pic.title = chart_title
 
-    for key,value in dict_values.items():
+    for key,value in dict_values:
         bar_pic.add(key, value)
 
     bar_pic.render_to_file(chart_title + '.svg')
 
     print(chart_title + ' Done!')
 
-# draw_bar_pic('发博终端统计',dict_values)
+# draw_source_bar_pic('发博终端统计',dict_values)
