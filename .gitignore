@@ -1,6 +1,7 @@
 ﻿# My configurations:
 backup/
 download_pics/
+__pycache__/
 download.txt
 downloaded.txt
 failed.txt
