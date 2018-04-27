@@ -4,8 +4,14 @@ from DrawBarChart import one_year_bar_chart, draw_stackedbar_chart,year_bar_char
 from FenCi import fenci
 #fin = open('x2010.csv','r',encoding = 'utf-8')
 
-def get_data():
-    fin = open('2010-2018.csv','r',encoding = 'utf-8-sig')
+'''获得数据'''
+'''按读入顺序，把数据存入列表并返回'''
+'''读入：csv_filename.csv 微博数据文本，以utf-8带bom编码（windows)'''
+'''输入：文件名'''
+'''输出：'''
+'''返回：以每一行的有序字典列表形式返回微博数据'''
+def get_data(csv_filename):
+    fin = open(csv_filename + '.csv','r',encoding = 'utf-8-sig')
     # reader = csv.reader(fin,delimiter=',')
     # fieldnames = next(reader)
     raw_data = []
@@ -18,6 +24,11 @@ def get_data():
     print('data get')
     return raw_data
 
+'''将按年分好类的数据按月分类'''
+'''读入：'''
+'''输入：按年分好类的数据'''
+'''输出：'''
+'''返回：每一月为一个key值的字典，其value为微博数据的列表'''
 def clarify_by_month(data):    
     ###'''待优化'''###
     '''数据按月存入字典'''
@@ -48,6 +59,11 @@ def clarify_by_month(data):
 
     return dict_data_month
 
+'''将数据按年分类'''
+'''读入：'''
+'''输入：列表形式的微博数据数据'''
+'''输出：'''
+'''返回：每一年为一个key值的字典，其value为按月分好类的字典'''
 def clarify_by_year(data,end):
     dict_data_year = {}
     '''每月数据存入列表'''
@@ -69,6 +85,11 @@ def clarify_by_year(data,end):
 
     return dict_data_year
 
+'''获得一年中月数据的统计值'''
+'''读入：'''
+'''输入：一个月数据列表'''
+'''输出：'''
+'''返回：字典，一个月统计值，'''
 def get_statistical_data(by_month):
     blog_num = len(by_month)
 
@@ -106,8 +127,12 @@ def get_statistical_data(by_month):
     
     return statistics
 
-#后期加入文件名
-def get_months_statistical_data(mon_data,year):
+'''得到一年中每一个月的统计值'''
+'''读入：'''
+'''输入：按月分类的数据'''
+'''输出：'''
+'''返回：一年中每一个月的统计值，及一年总统计值，字典'''
+def get_months_statistical_data(mon_data,year):#后期加入文件名
     # data = get_data()
     # mon_data = clarify_by_month(data)
     one_year_data = [] # 按月排列一年统计数据
@@ -175,9 +200,14 @@ def get_months_statistical_data(mon_data,year):
     print(str(year) + '\'s statistical data classified!')
     return month_data_classified, year_data
 
+###'''主要函数'''###
 '''从文件读入所有年份数据，并归类'''
-def get_all_statistical_data(start,end):
-    data = get_data()
+'''读入：weibo.csv'''
+'''输入：文件名，起止年份'''
+'''输出：各统计图表'''
+'''返回：'''
+def get_all_statistical_data(csv_filename,start,end):
+    data = get_data(csv_filename)
     year_data = clarify_by_year(data,end)
     year_data_by_month = {} # 按年排列一年统计数据
     whole_year_statistices_data = {}
@@ -193,6 +223,11 @@ def get_all_statistical_data(start,end):
 
     draw_whole_year_pic(whole_year_statistices_data,start,end)
 
+'''作出月数据的统计图'''
+'''读入：'''
+'''输入：字典形式月数据，年份'''
+'''输出：月数据统计图'''
+'''返回：'''
 def draw_one_year_pic(dict_data,year):
     '''年月动态统计'''
     '''年微博平均字数统计'''
@@ -209,6 +244,11 @@ def draw_one_year_pic(dict_data,year):
     if year >2015:
         one_year_bar_chart(str(year)+'年微博平均字数统计',dict_data['avg_word'])
 
+'''作出年数据的统计图'''
+'''读入：'''
+'''输入：字典形式年数据，年份起止'''
+'''输出：年数据统计图'''
+'''返回：'''
 def draw_whole_year_pic(dict_data, start, end):
     year_blog_num, year_word_num, year_retweet_num = [],[],[]
     year_pic_blog_num, year_com_num,  year_att_num = [],[],[]
@@ -263,8 +303,13 @@ def draw_whole_year_pic(dict_data, start, end):
     '''年转发占比统计'''
     draw_stackedbar_chart('年转发占比统计',orig_percent,ret_percent,start,end)
 
-def get_blog_source():
-    data = get_data()
+'''作出终端的统计图'''
+'''读入：weibo.csv微博数据'''
+'''输入：文件名'''
+'''输出：使用量前10终端数据统计图'''
+'''返回：'''
+def get_blog_source(csv_filename):
+    data = get_data(csv_filename)
     source = {}
     for row in data:
         if row['source'] not in source:
@@ -285,5 +330,5 @@ def get_blog_source():
 # fout = open('1.txt','w')
 # print(year_data['2010'],file = fout)
 if __name__ == '__main__':
-    get_all_statistical_data(2010,2018)
-    get_blog_source()
+    get_all_statistical_data(csv_filename,2016,2018)
+    get_blog_source(csv_filename)
