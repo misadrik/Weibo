@@ -57,15 +57,32 @@ def download_pics(urls, thread_id):
         except:
             print(url, file=fout)  # 下载失败 保存链接
             print('pic: ' + url.split('/')[-1] + ' failed!')
-        # else:
-        #     time.sleep(2)
-        #     print('pic: ' + url.split('/')[-1] + ' done!')
+            # else:
+            #     time.sleep(2)
+            #     print('pic: ' + url.split('/')[-1] + ' done!')
 
 
 def thread_run(download_urls):  # 多线程
-    for i in range(0, 10):
+    url_group_0 = []
+    url_group_1 = []
+    url_group_2 = []
+    url_group_3 = []
+
+    for index in range(len(download_urls)):  # 将url分为四组
+        if index % 4 == 0:
+            url_group_0.append(download_urls[index])
+        elif index % 4 == 1:
+            url_group_1.append(download_urls[index])
+        elif index % 4 == 2:
+            url_group_2.append(download_urls[index])
+        elif index % 4 == 3:
+            url_group_3.append(download_urls[index])
+
+    url_groups = [url_group_0, url_group_1, url_group_2, url_group_3]
+
+    for i in range(0, 4):
         try:
-            t = Thread(target=download_pics, args=(download_urls, i))
+            t = Thread(target=download_pics, args=(url_groups[i], i))
             t.start()
         except:
             print('wrong')
