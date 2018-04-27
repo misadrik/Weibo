@@ -2,7 +2,10 @@ import json
 import csv
 
 '''获得一个卡片下的信息'''
-
+'''读入：'''
+'''输入：已从json提取出的字典形式的一个卡片的数据 页码'''
+'''输出：'''
+'''返回：以字典形式返回微博数据'''
 host_url = 'https://m.weibo.cn'
 def get_one_card_Info(mblog,page):
     one_card_Info = {}
@@ -74,7 +77,11 @@ def get_one_card_Info(mblog,page):
 #fw = open('mblog4.txt','w',encoding = 'utf-8') 
 #fc = open('card.txt','w',encoding = 'utf-8')
 # f = open('getIndex24.json')
-
+'''从json中获取一页数据'''
+'''读入：'''
+'''输入：从网页返回的json数据 页码'''
+'''输出：weibo.csv 微博数据'''
+'''返回：'''
 def get_one_page_data(data,page):
     fcsv = open('weibo.csv','a',encoding = 'utf-8',newline = '') 
     fieldnames = ['created_at','id','auth','is_retweet','is_long_text','text','text_length','has_pics','pics_num','pics','source', 'comments_count','attitudes_count','page']
